@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.demo.mapper.EmployeeMapper">
+    <insert id="insert" flushCache="false" useGeneratedKeys="true" keyProperty="id" >
+      insert into employee(name,age,birth) VALUES (#{name},#{age},#{birth})
+    </insert>
+
+    <update id="update">
+      update employee
+      <set>
+          <if test="name != null">name = #{name}</if>
+          <if test="age != null"> age = #{age}</if>
+          <if test="birth!=null"> birth=#{birth}</if>
+      </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE  from employee WHERE id = #{id}
+    </delete>
+
+
+    <select id="selectByConditions" resultType="com.mybatis.demo.entity.Employee">
+        select * from employee where id = #{id} and name = #{name}
+    </select>
+
+    <select id="allEmployees" resultType="employee">
+        SELECT  * from employee
+    </select>
+
+    <select id="allEmpMap" resultType="employee">
+        SELECT * from employee
+    </select>
+
+</mapper>

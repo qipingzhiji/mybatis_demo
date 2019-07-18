@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.demo.mapper.DeptMapper">
+    <select id="selectDeptById" resultType="dept">
+        SELECT  * from dept where id = #{id}
+    </select>
+
+    <resultMap id="deptAndTeacherMap" type="dept" >
+        <id column="id" property="id"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="teachers" ofType="teacher">
+            <id column="t_id" property="id"></id>
+            <result column="first_name" property="name"></result>
+            <result column="subject" property="subject"></result>
+            <result column="deptNum" property="deptNum"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectDeptAndTeachers" resultMap="deptAndTeacherMap">
+        select d.id,d.dept_name,t.id t_id,t.first_name,t.subject,t.deptNum from dept d
+        left join teacher t on d.id = t.deptNum WHERE d.id = #{id,javaType=Integer,jdbcType=TINYINT}
+    </select>
+
+
+    <resultMap id="deptAndTeacherMapStep" type="dept">
+        <id column="id" property="id"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="teachers" select="com.mybatis.demo.mapper.TeacherMapper.selectTeacherByDeptNum"
+                    column="{deptNum=id}" fetchType="lazy">
+
+        </collection>
+    </resultMap>
+
+    <select id="selectDeptAndTeachersStep" resultMap="deptAndTeacherMapStep">
+        select * from dept where id = #{id}
+    </select>
+</mapper>

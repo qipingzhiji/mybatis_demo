@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.mybatis.demo.entity
+  configuration:
+    auto-mapping-behavior: full
+    map-underscore-to-camel-case: true
+    aggressive-lazy-loading: false
+    lazy-loading-enabled: true #开启懒加载，只有在使用的时候才会加载数据
+logging:
+  level:
+    com.mybatis.demo.mapper: debug
