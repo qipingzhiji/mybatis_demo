@@ -1,5 +1,6 @@
 package com.mybatis.demo.controller;
 
+import com.mybatis.demo.entity.Teacher;
 import com.mybatis.demo.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +29,13 @@ public class TeacherControll {
     @RequestMapping("/listDeptTeachers")
     public Object listDeptTeachers() {
         return dao.selectTeacherByDeptNum(2);
+    }
+
+
+    @RequestMapping("/listTeacherDesc")
+    public Object listTeacherDesc() {
+        Teacher teacher1 = dao.selectTeacherById(2);
+        Teacher teacher2 = dao.selectTeacherById(4);
+        return null;
     }
 }

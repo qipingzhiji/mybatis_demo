@@ -10,5 +10,7 @@ public class Teacher {
     private String name;
     private String subject;
     private Integer deptNum;
+    private int sex;
+    private String comment;
     private Dept dept;
 }

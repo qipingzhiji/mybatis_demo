@@ -39,8 +39,9 @@
         <result column="subject" property="subject"></result>
         <result column="deptNum" property="deptNum"></result>
         <association  property="dept" select="com.mybatis.demo.mapper.DeptMapper.selectDeptById"
-                      column="deptNum">
+                      column="deptNum" >
         </association>
+
     </resultMap>
 
     <select id="selectTeacherAndDeptStep" resultMap="teacherAndDeptResultStep">
@@ -50,5 +51,30 @@
 
     <select id="selectTeacherByDeptNum" resultType="teacher">
         select * from teacher WHERE deptNum=#{deptNum}
+    </select>
+
+    <resultMap id="teacherMapDesc" type="teacher">
+        <id column="id" property="id"></id>
+        <result column="first_name" property="name"></result>
+        <result column="subject" property="subject"></result>
+        <result column="deptNum" property="deptNum"></result>
+        <result column="sex" property="sex" ></result>
+        <result column="comment" property="comment"></result>
+        <discriminator javaType="int" column="sex" >
+            <case value="0" >
+                <association property="dept" fetchType="lazy" select="com.mybatis.demo.mapper.DeptMapper.selectDeptById"
+                column="{id=deptNum}">
+
+                </association>
+            </case>
+            <case value="1">
+                <result column="sex" property="comment"></result>
+            </case>
+        </discriminator>
+
+    </resultMap>
+
+    <select id="selectTeacherById" resultMap="teacherMapDesc">
+        select * from teacher where id = #{id}
     </select>
 </mapper>

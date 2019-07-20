@@ -18,4 +18,6 @@ public interface TeacherMapper {
     List<Teacher> selectTeacherAndDeptStep(Integer id);
 
     List<Teacher> selectTeacherByDeptNum(@Param("deptNum") Integer deptNum);
+
+    Teacher selectTeacherById(Integer id);
 }
