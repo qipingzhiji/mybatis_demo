@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 19/07/2019 01:40:22
+ Date: 21/07/2019 12:36:21
 */
 
 SET NAMES utf8mb4;
@@ -66,8 +66,10 @@ DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher`  (
   `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sex` int(1) NULL DEFAULT NULL,
   `subject` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `deptNum` tinyint(3) UNSIGNED NULL DEFAULT NULL,
+  `comment` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `teacher_dept_fk`(`deptNum`) USING BTREE,
   CONSTRAINT `teacher_dept_fk` FOREIGN KEY (`deptNum`) REFERENCES `dept` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -76,10 +78,10 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
-INSERT INTO `teacher` VALUES (1, 'admin', '信息技术', 16);
-INSERT INTO `teacher` VALUES (2, 'xiaohong', '数学', 2);
-INSERT INTO `teacher` VALUES (4, 'xiaogang', '计算机', 2);
-INSERT INTO `teacher` VALUES (5, 'xiaoqiang', '语文', 3);
-INSERT INTO `teacher` VALUES (6, 'john', '英语', 3);
+INSERT INTO `teacher` VALUES (1, 'admin', 1, '信息技术', 16, NULL);
+INSERT INTO `teacher` VALUES (2, 'xiaohong', 0, '数学', 2, NULL);
+INSERT INTO `teacher` VALUES (4, 'xiaogang', 1, '计算机', 2, NULL);
+INSERT INTO `teacher` VALUES (5, 'xiaoqiang', 1, '语文', 3, NULL);
+INSERT INTO `teacher` VALUES (6, 'john', 1, '英语', 3, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
