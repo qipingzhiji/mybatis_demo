@@ -17,4 +17,3 @@ mybatis:
 logging:
   level:
     com.mybatis.demo.mapper: debug
-mybatis.

@@ -77,4 +77,65 @@
     <select id="selectTeacherById" resultMap="teacherMapDesc">
         select * from teacher where id = #{id}
     </select>
+
+
+
+    <select id="listTeacherByConditon" resultType="teacher">
+        select * from teacher
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="firstName !=null">
+                and first_name like #{firstName}
+            </if>
+            <if test="sex != null">
+                and sex  = #{sex}
+            </if>
+
+        </where>
+    </select>
+
+
+    <update id="updateTeacherById">
+        update teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null">
+                first_name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="subject != null">
+                subject = #{subject},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <resultMap id="selectTeachersByIdsMap" type="teacher">
+        <id column="id" property="id"></id>
+        <result column="first_name" property="name"></result>
+        <result column="subject" property="subject"></result>
+        <result column="deptNum" property="deptNum"></result>
+        <result column="sex" property="sex" ></result>
+        <result column="comment" property="comment"></result>
+        <association property="dept" select="com.mybatis.demo.mapper.DeptMapper.selectDeptById" column="{id=deptNum}" fetchType="lazy">
+
+        </association>
+    </resultMap>
+
+    <select id="selectTeachersByIds" resultMap="selectTeachersByIdsMap">
+      SELECT * from teacher where id in
+      <foreach collection="ids" open="(" close=")" separator="," item="id">
+          #{id}
+      </foreach>
+    </select>
+
+    <insert id="insertTeachers">
+        insert into teacher(first_name, sex, subject, deptNum, comment) VALUES
+        <foreach collection="teachers" item="teacher" separator="," >
+            (#{teacher.name},#{teacher.sex},#{teacher.subject},#{teacher.deptNum},#{teacher.comment})
+        </foreach>
+    </insert>
 </mapper>
