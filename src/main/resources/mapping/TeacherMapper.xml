@@ -87,7 +87,9 @@
                 and id = #{id}
             </if>
             <if test="firstName !=null">
-                and first_name like #{firstName}
+                /*bind标签的使用*/
+                <bind name="_firstname" value="'%'+firstName+'%'"></bind>
+                and first_name like #{_firstname}
             </if>
             <if test="sex != null">
                 and sex  = #{sex}

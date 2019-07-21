@@ -47,7 +47,7 @@ public class TeacherControll {
     @RequestMapping("/ListTeacherByConditons")
     public Object ListTeacherByConditons() {
         Map<String,Object> conditions = new HashMap<String,Object>();
-        conditions.put("sex", "1");
+        conditions.put("firstName","ea");
         List<Teacher> teachers = dao.listTeacherByConditon(conditions);
         return teachers;
     }
