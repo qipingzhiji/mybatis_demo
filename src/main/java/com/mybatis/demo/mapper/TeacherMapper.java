@@ -31,4 +31,6 @@ public interface TeacherMapper {
 
 
     int insertTeachers(@Param("teachers") List<Teacher> teachers);
+
+
 }

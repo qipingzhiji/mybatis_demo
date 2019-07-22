@@ -6,6 +6,8 @@ spring:
     url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     username: root
     password: root
+
+
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.mybatis.demo.entity
@@ -14,6 +16,9 @@ mybatis:
     map-underscore-to-camel-case: true
     aggressive-lazy-loading: false
     lazy-loading-enabled: true #开启懒加载，只有在使用的时候才会加载数据
+    cache-enabled: true #开启全局二级缓存配置
+    local-cache-scope: session #这个是开启一级缓存，默认是开启一级缓存的
+
 logging:
   level:
     com.mybatis.demo.mapper: debug
