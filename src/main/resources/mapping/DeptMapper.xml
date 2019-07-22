@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.mapper.DeptMapper">
-    <cache-ref namespace="com.mybatis.demo.mapper.EmployeeMapper"/>
+    <cache-ref namespace="com.mybatis.demo.mapper.TeacherMapper"/>
     <select id="selectDeptById" resultType="dept">
         SELECT  * from dept where id = #{id}
     </select>
