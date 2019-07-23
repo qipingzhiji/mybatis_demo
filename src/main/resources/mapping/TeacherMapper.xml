@@ -35,7 +35,7 @@
     </resultMap>
 
     <select id="allTeacher" resultMap="teacherMap">
-      select * from teacher;
+      select * from teacher
     </select>
 
     <select id="selectTeacherAndDept" resultMap="teacherAndDeptResult2">
@@ -69,6 +69,7 @@
         <result column="deptNum" property="deptNum"></result>
         <result column="sex" property="sex" ></result>
         <result column="comment" property="comment"></result>
+        <result column="status" property="status" typeHandler="com.mybatis.demo.mybatis.typeHandler.TeacherStatusEnumHandler"></result>
         <discriminator javaType="int" column="sex" >
             <case value="0" >
                 <association property="dept" fetchType="lazy" select="com.mybatis.demo.mapper.DeptMapper.selectDeptById"
@@ -153,4 +154,9 @@
     </insert>
 
 
+    <insert id="insertTeachersByBatch" >
+      <foreach collection="teachers" item="teacher">
+          insert into teacher(first_name, sex, subject, deptNum,status, comment) VALUES(#{teacher.name},#{teacher.sex},#{teacher.subject},#{teacher.deptNum},#{teacher.status,typeHandler=com.mybatis.demo.mybatis.typeHandler.TeacherStatusEnumHandler},#{teacher.comment});
+      </foreach>
+    </insert>
 </mapper>

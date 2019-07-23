@@ -1,8 +1,13 @@
 package com.mybatis.demo.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mybatis.demo.entity.Teacher;
+import com.mybatis.demo.enums.TeacherStatuesEnum;
 import com.mybatis.demo.mapper.TeacherMapper;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +20,10 @@ import java.util.Map;
 public class TeacherControll {
     @Autowired
     private TeacherMapper dao;
+
+    @Autowired
+    @Qualifier("batchSession")
+    private SqlSession sqlSession;
 
     @RequestMapping("/allTeacherInfo")
     public  Object getAllTeachers(){
@@ -41,6 +50,7 @@ public class TeacherControll {
     public Object listTeacherDesc() {
         Teacher teacher1 = dao.selectTeacherById(2);
         Teacher teacher2 = dao.selectTeacherById(4);
+        System.out.println(teacher1.toString());
         return null;
     }
 
@@ -71,13 +81,37 @@ public class TeacherControll {
 
     @RequestMapping("/insertTeachers")
     public Object insertTeachers() {
-        List<Teacher> teachers = new ArrayList<>();
-        Teacher teacher1 = new Teacher();
-        teacher1.setName("teacher1");
-        Teacher teacher2 = new Teacher();
-        teacher2.setName("teacher2");
-        teachers.add(teacher1);
-        teachers.add(teacher2);
+        List<Teacher> teachers = getTeachers();
         return dao.insertTeachers(teachers);
+    }
+
+    @RequestMapping("/allTeachersByPage")
+    public  Object getAllTeachersByPage(){
+        PageHelper.startPage(1,2);
+        List<Teacher> teachers = dao.allTeacher();
+        PageInfo<Teacher> teacherPageInfo = new PageInfo<>(teachers,5);
+        System.out.println(teacherPageInfo.getNavigatepageNums());
+        return  teacherPageInfo;
+    }
+
+    @RequestMapping("/insertTeachersBatch")
+    public Object insertTeachersBatch() {
+        List<Teacher> teachers = getTeachers();
+        TeacherMapper mapper = sqlSession.getMapper(TeacherMapper.class);
+        return mapper.insertTeachersByBatch(teachers);
+    }
+
+
+
+
+    private List<Teacher> getTeachers() {
+        List<Teacher> teachers = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Teacher teacher = new Teacher();
+            teacher.setName("teacher" + i);
+            teacher.setStatus(TeacherStatuesEnum.LOGIN);
+            teachers.add(teacher);
+        }
+        return teachers;
     }
 }

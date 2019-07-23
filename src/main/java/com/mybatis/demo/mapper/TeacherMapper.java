@@ -32,5 +32,6 @@ public interface TeacherMapper {
 
     int insertTeachers(@Param("teachers") List<Teacher> teachers);
 
+    int insertTeachersByBatch(@Param("teachers") List<Teacher> teachers);
 
 }

@@ -1,5 +1,6 @@
 package com.mybatis.demo.entity;
 
+import com.mybatis.demo.enums.TeacherStatuesEnum;
 import lombok.Data;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.type.Alias;
@@ -18,4 +19,5 @@ public class Teacher implements Serializable{
     private int sex;
     private String comment;
     private Dept dept;
+    private TeacherStatuesEnum status;
 }

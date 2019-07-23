@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&allowMultiQueries=true #allowMultiQueries指定mysql数据库可以一次提交多个sql
     username: root
     password: root
 
@@ -18,7 +18,13 @@ mybatis:
     lazy-loading-enabled: true #开启懒加载，只有在使用的时候才会加载数据
     cache-enabled: true #开启全局二级缓存配置
     local-cache-scope: session #这个是开启一级缓存，默认是开启一级缓存的
-
+    default-executor-type: simple #创建能批量执行sql的Excutor
+  type-handlers-package: com.mybatis.demo.mybatis.typeHandler
 logging:
   level:
     com.mybatis.demo.mapper: debug
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
